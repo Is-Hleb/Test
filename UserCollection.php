@@ -1,7 +1,8 @@
 <?php
 
-class UserCollection extends Db
+class UserCollection
 {
+    use Db;
     const TABLE = 'users';
 
     /**
@@ -22,9 +23,8 @@ class UserCollection extends Db
      */
     public static function loadByIds($ids)
     {
-        $db = new Db();
         $sql = 'SELECT * FROM `' . self::TABLE . '` WHERE `' . self::TABLE . '`.`id` IN (' . implode(',', $ids) . ')';
-        $data = $db->query($sql, []);
+        $data = (new UserCollection)->query($sql, []);
         return self::setCollection($data);
     }
 
@@ -33,8 +33,7 @@ class UserCollection extends Db
      */
     public static function loadAll()
     {
-        $db = new Db();
-        $data = $db->query('SELECT * FROM `' . self::TABLE . '`', []);
+        $data = (new UserCollection)->query('SELECT * FROM `' . self::TABLE . '`', []);
         return self::setCollection($data);
     }
 
@@ -43,9 +42,8 @@ class UserCollection extends Db
      */
     public static function where($name, $action, $value)
     {
-        $db = new Db();
         $sql = 'SELECT * FROM `' . self::TABLE . '` WHERE ' . $name . $action .':'.$name;
-        $data = $db->query($sql, [':'.$name => $value]);
+        $data = (new UserCollection)->query($sql, [':'.$name => $value]);
         return self::setCollection($data);
     }
 }

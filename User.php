@@ -1,8 +1,10 @@
 <?php
 
 
-class User extends Db
+class User
 {
+    use Db;
+
     const TABLE = 'users';
     const FIELDS = [
         'id',
@@ -62,12 +64,12 @@ class User extends Db
      */
     public function __construct($data = [], $save = false)
     {
-        try {
-            parent::__construct();
-        } catch (Exception $e) {
-            echo $e->getMessage();
-            exit();
-        }
+//        try {
+//            // parent::__construct();
+//        } catch (Exception $e) {
+//            echo $e->getMessage();
+//            exit();
+//        }
         $this->data = $data;
         if ($save)
             $this->save();

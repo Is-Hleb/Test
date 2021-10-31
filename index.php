@@ -28,7 +28,7 @@ try {
         'date_of_birth' => date("Y-m-d"),
         'birth_city' => 'City',
         'sex' => true,
-    ], true);
+    ]);
 
     $user->name = "Gleb";
     $user->surname = "Ischenko";

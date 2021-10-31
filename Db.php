@@ -1,14 +1,14 @@
 <?php
 
 
-class Db
+trait Db
 {
     private $dbh;
 
     /**
      * @throws Exception
      */
-    public function __construct()
+    private function dbConstruct()
     {
         $config = (include __DIR__ . '/config.php')['db'];
         $config['host'] .= ':' . $config['port'];
@@ -20,14 +20,22 @@ class Db
     }
 
 
+    /**
+     * @throws Exception
+     */
     protected function execute($sql, $data = [])
     {
+        $this->dbConstruct();
         $sth = $this->dbh->prepare($sql);
         return $sth->execute($data);
     }
 
+    /**
+     * @throws Exception
+     */
     protected function getLastId()
     {
+        $this->dbConstruct();
         return $this->dbh->lastInsertId();
     }
 
@@ -36,6 +44,7 @@ class Db
      */
     protected function query($sql, $data)
     {
+        $this->dbConstruct();
         $sth = $this->dbh->prepare($sql);
         $res = $sth->execute($data);
         if(!$res){
