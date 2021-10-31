@@ -22,6 +22,18 @@ $user = new User([
 
 try {
     var_export(UserCollection::where('id', '>', '13'));
+    $user = new User([
+        'name' => 'Name',
+        'surname' => 'Surname',
+        'date_of_birth' => date("Y-m-d"),
+        'birth_city' => 'City',
+        'sex' => true,
+    ], true);
+
+    $user->name = "Gleb";
+    $user->surname = "Ischenko";
+
+    $user->save();
 //    $user = new User();
 //    $user->name = "Some";
 //    $user->destroy();

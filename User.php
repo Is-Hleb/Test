@@ -112,7 +112,7 @@ class User extends Db
         }));
 
         foreach (self::FIELDS as $field) {
-            if (!$this->data[$field]) {
+            if (!array_key_exists($field, $this->data) && $field != 'id') {
                 throw new Exception('Some fields are not setted');
             }
             if ($field == 'id' && !$isUpdateAction) {
@@ -122,7 +122,7 @@ class User extends Db
         }
 
         if(!$isUpdateAction) {
-            $sql = 'INSERT INTO `' . self::TABLE . '`(' . implode(',', self::FIELDS) . ') VALUES (' . implode(',', array_keys($dataToInsert)) . ')';
+            $sql = 'INSERT INTO `' . self::TABLE . '`(' . implode(',', array_filter(self::FIELDS, function($item) {return $item != 'id'; })) . ') VALUES (' . implode(',', array_keys($dataToInsert)) . ')';
         } else {
             $sql = 'UPDATE `' . self::TABLE . '` SET ' . implode(',', $updateFields) . ' WHERE `' . self::TABLE . '`.`id` = :id';
         }
